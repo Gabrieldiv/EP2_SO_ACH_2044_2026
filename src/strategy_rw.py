@@ -1,25 +1,26 @@
+import threading
+
 class EstrategiaRW:
 
     def __init__(self):
-        # Guarda o estado compartilhado: um contador de leitores dentro da base (começa em 0),
-        # um lock que protege esse contador e um lock/semáforo que controla o acesso à base inteira.
-        pass
+        self._leitores = 0 #Leitores na base
+        self._trava_contador = threading.Lock() #Lock protege contador
+        self._acesso_base = threading.Lock() #Lock controla acesso à base inteira
 
     def entrar_leitura(self):
-        # Leitores entram juntos. Só espera se houver um escritor dentro da base agora;
-        # escritores que apenas aguardam a vez não bloqueiam o leitor (prioridade a leitores).
-        # O primeiro leitor a entrar trava o acesso para os escritores; os seguintes só aumentam o contador.
-        pass
+        with self._trava_contador:
+            self._leitores += 1
+            if self._leitores == 1: #Primeiro leitor
+                self._acesso_base.acquire()
 
     def sair_leitura(self):
-        # Diminui o contador de leitores. Se era o último (contador chegou a 0),
-        # libera o acesso à base para os escritores que estão esperando.
-        pass
+        with self._trava_contador:
+            self._leitores -= 1
+            if self._leitores == 0: #Último leitor
+                self._acesso_base.release()
 
     def entrar_escrita(self):
-        # Só entra quando não há nenhum leitor dentro da base e nenhum outro escritor. Espera se houver.
-        pass
+        self._acesso_base.acquire()
 
     def sair_escrita(self):
-        # Libera o acesso à base para quem estiver esperando (leitor ou escritor).
-        pass
+        self._acesso_base.release()
