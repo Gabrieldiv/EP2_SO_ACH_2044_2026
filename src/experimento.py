@@ -1,6 +1,10 @@
+import random
+import time
+
 from src.base import Base
-from src.workers import Leitor, Escritor
-import random, time 
+from src.workers import Escritor, Leitor
+
+
 def rodar_experimento(n_leitores, n_escritores, classe_estrategia):
     # Cria a Base e uma estratégia nova (a partir da classe recebida), monta as 100 threads
     # (n_leitores leitores + n_escritores escritores) embaralhadas e inicia todas.
@@ -19,5 +23,4 @@ def rodar_experimento(n_leitores, n_escritores, classe_estrategia):
     for processo in threads:
         processo.join()
     fim = time.perf_counter()
-    return ((fim - inicio) * 1000)
-    
+    return (fim - inicio) * 1000

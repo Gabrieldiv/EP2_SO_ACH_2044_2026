@@ -1,7 +1,9 @@
-import threading, time, random
+import random
+import threading
+import time
+
 
 class Leitor(threading.Thread):
-
     def __init__(self, base, estrategia):
         super().__init__()
         self.base = base
@@ -15,14 +17,12 @@ class Leitor(threading.Thread):
                 aleatorio = random.randrange(self.base.tamanho())
                 self.base.ler(aleatorio)
             time.sleep(0.001)
-            
-            
+
         finally:
             self.estrategia.sair_leitura()
 
 
 class Escritor(threading.Thread):
-
     def __init__(self, base, estrategia):
         super().__init__()
         self.base = base
@@ -36,8 +36,6 @@ class Escritor(threading.Thread):
                 aleatorio = random.randrange(self.base.tamanho())
                 self.base.escrever(aleatorio, "MODIFICADO")
             time.sleep(0.001)
-            
-            
+
         finally:
             self.estrategia.sair_escrita()
-
