@@ -5,7 +5,6 @@ from src.experimento import rodar_experimento
 from src.strategy_lock import EstrategiaLock
 from src.strategy_rw import EstrategiaRW
 
-
 RODADAS = 50
 TOTAL_THREADS = 100
 ARQUIVO_RESULTADOS = (

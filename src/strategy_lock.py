@@ -2,7 +2,6 @@ import threading
 
 
 class EstrategiaLock:
-
     def __init__(self):
         # Guarda um único lock que protege a base inteira. Não há contador de leitores,
         # porque aqui leitor e escritor são tratados igual: um de cada vez dentro da base.
